@@ -1,0 +1,168 @@
+swagger : "2.0"
+info :
+  title : Testing Swagger API  UI Docs
+  description : This is My documentation.
+  version : 1.0
+  contact :
+    email: arjunsparkouttech.com
+  License :
+    name : Apache 2.0
+    -url : "http://apache.org"  
+  servers : 
+    -url: "http://localhost:3000/"  
+    description : "This is my local server"
+
+schemes: [http,https]
+
+paths : 
+#Returns a string
+  /string :
+    get : 
+      summary : Returns a String
+      description : It just returning a string 
+      responses : 
+        200:
+          description : Success
+          schema : 
+            type : string
+            example : A example string
+        400:
+          description : user error
+        500:
+          description : Internal Server Error
+
+#Returns an Object
+  /user :
+    get : 
+      summary : Returns a Object
+      description : It just returning a object 
+      responses : 
+        200:
+          description : Success
+          schema : 
+            type : object
+            properties :
+              id :
+                type: integer
+              name :
+                type : string  
+        400:
+          description : user error
+        500:
+          description : Internal Server Error
+
+#retuning array of users
+  /users :
+    get:
+      summary : Retuns array of user
+      description : Array 
+      responses :
+        200 :
+          description : success
+          schema : 
+            type : array
+            items : 
+              type : object
+              properties:
+                id :
+                  type: integer
+                name : 
+                  type : string
+
+#getting data through user id
+  /users/{userId}:
+    get:
+      summary : Returns Array of users
+      description : Returns Array
+      parameters :
+        - name : userId
+          in : path
+          required : true
+          schema :
+            type : integer
+      responses :
+        200:
+          description : success 
+        400:
+          description : user error
+        500:
+          description : Internal Server Error         
+
+#post json/body
+  # /create :
+  #   post:
+  #     summary: Posting data
+  #     produces: 
+  #       -application/json
+  #     consumes :
+  #       -application/json
+  #     parameters :
+  #     - in : body
+  #       name : user
+  #       schema : 
+  #         type : object
+  #         properties :
+  #           id : 
+  #             type : integer
+  #           name :
+  #             type : string
+  #     responses:
+  #       200:
+  #         description : OK          
+
+# Defining with Id
+  /create :
+    post:
+      summary: Posting data
+      produces: 
+        -application/json
+      consumes :
+        -application/json
+      parameters :
+      - in : body
+        name : user
+        schema : 
+          $ref : "#/components/schemas/User"          
+      responses:
+        200:
+          description : OK 
+
+#query
+  /usersQuery :
+    get:
+      parameters :
+      - in : query
+        name : id 
+        type : integer
+        enum : [1,2,3]
+      responses :
+        200 :
+          description : OK  
+
+#File upload 
+  /upload :
+    post:
+      consumes:
+        -multipart/form-data
+      parameters :
+      - in : formData
+        name : file
+        type : file
+        required : true
+        description : File Upload  
+      responses :
+        200:
+          description : OK  
+
+
+
+
+components :
+  schemas :
+    User :
+      type : object
+      properties :
+        id :
+          type: integer
+        name :
+          type : string            
