@@ -12,7 +12,7 @@ app.use(morgan('dev'));
 app.use(express.json())
 app.use(fileUpload())
 
-app.use("/",swaggerUI.serve,swaggerUI.setup(swaggerJsDocs))
+app.use("/api-docs",swaggerUI.serve,swaggerUI.setup(swaggerJsDocs))
 
 let users =[{id: 1 ,name : "kishor"},{id :2 , name : "kumar"}]
 app.get("/string",(req,res) => res.status(200).json({
